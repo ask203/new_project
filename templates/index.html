@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row g-4">
+  <div class="col-md-4">
+    <div class="card p-3">
+      <h4>Add roommate</h4>
+      <form method="post" action="/users">
+        <input class="form-control mb-2" name="name" placeholder="Name" required />
+        <button class="btn btn-primary">Create</button>
+      </form>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="card p-3">
+      <h4>Create household/group</h4>
+      <form method="post" action="/groups">
+        <input class="form-control mb-2" name="name" placeholder="Group Name" required />
+        <label class="form-label">Members</label>
+        <select class="form-select mb-2" name="member_ids" multiple size="6" required>
+          {% for user in users %}
+            <option value="{{ user.id }}">{{ user.name }}</option>
+          {% endfor %}
+        </select>
+        <button class="btn btn-success">Create Group</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="card p-3 mt-4">
+  <h4>Your groups</h4>
+  <ul>
+    {% for group in groups %}
+    <li><a href="/groups/{{ group.id }}">{{ group.name }}</a></li>
+    {% else %}
+    <li>No groups yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
